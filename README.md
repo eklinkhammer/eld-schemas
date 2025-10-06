@@ -1,7 +1,15 @@
-# Usage
-```bash
-npm i git+ssh://git@github.com/eklinkhammer/eld-schemas.git
-```
+# Description
+Shared data models between findatruck backend services
 
-# Changes
-Don't forget to change the version.
+# Deploying
+```
+git add --all
+git commit -m "feat: add NewSchema"
+
+# choose patch / minor / major
+npm version minor -m "chore: release"
+
+npm login
+npm publish --access public
+git push && git push --tags
+```
