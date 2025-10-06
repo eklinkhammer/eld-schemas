@@ -1,6 +1,6 @@
 {
   "name": "@findatruck/shared-schemas",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -12,12 +12,14 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup src/index.ts --dts --format esm,cjs --out-dir dist --clean",
     "prepublishOnly": "npm run build",
-	"prepare": "npm run build"
+    "prepare": "npm run build"
   },
   "peerDependencies": {
     "zod": "^3.23.0"
