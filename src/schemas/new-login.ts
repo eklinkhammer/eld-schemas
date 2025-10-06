@@ -16,7 +16,6 @@ export const NewLoginRequest = z.object({
     providerUrl: UrlSchema,
     username: z.string().min(1),
     password: z.string().min(1),
-    integrationId: z.string().min(1),
 });
 
 const PublicUser = z.object({
@@ -25,7 +24,6 @@ const PublicUser = z.object({
     username: z.string(),
     created_at: z.coerce.date(),
     updated_at: z.coerce.date(),
-    integrationId: z.string().min(1),
 });
 type PublicUser = z.infer<typeof PublicUser>;
 
