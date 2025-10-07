@@ -12,7 +12,6 @@ const UrlSchema = z.string().refine(
   { message: "Invalid URL" }
 );
 export const NewLoginRequest = z.object({
-    dispatcher_id: z.string().min(1),
     providerUrl: UrlSchema,
     username: z.string().min(1),
     password: z.string().min(1),
@@ -20,7 +19,6 @@ export const NewLoginRequest = z.object({
 
 const PublicUser = z.object({
     id: z.string(),
-    dispatcher_id: z.string(),
     username: z.string(),
     created_at: z.coerce.date(),
     updated_at: z.coerce.date(),
