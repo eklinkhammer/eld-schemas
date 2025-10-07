@@ -1,6 +1,16 @@
 import z from "zod"
-import { UrlSchema } from "./new-login";
 
+const UrlSchema = z.string().refine(
+  (val) => {
+    try {
+      new URL(val);
+      return true;
+    } catch {
+      return false;
+    }
+  },
+  { message: "Invalid URL" }
+);
 export const ConvexUpdate = z.object({
     providerUrl: UrlSchema.describe("The URL of the ELD provider"),
     username: z.string().describe("The driver's login username"),
