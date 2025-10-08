@@ -16,6 +16,10 @@ export const ConvexUpdate = z.object({
     username: z.string().describe("The driver's login username"),
     password: z.string().describe("The driver's login password"),
     driver_id: z.string().optional().describe("The ELD's internal driver ID"),
+    driver_first_name: z.string().optional().describe("The driver's first name"),
+    driver_last_name: z.string().optional().describe("The driver's last name"),
+    driver_name: z.string().optional().describe("The driver's full name"),
+    vehicle_id: z.string().optional().describe("The vehicle ID"),
     driver_status: z.string().describe("The driver's duty status (direct from ELD)"),
     time_remaining_in_shift: z.number().describe("Seconds remaining in current shift"),
     time_remaining_till_break: z.number().describe("Seconds remaining until next required break"),
@@ -54,8 +58,22 @@ export const DriverLogin = z.object({
 }).describe("Schema for driver login information");
 export type DriverLogin = z.infer<typeof DriverLogin>;
 
-export const ConvexUpdateNested = z.object({
+export const DriverIdentity = z.object({
     driverId: z.string().describe("The ELD's internal driver ID"),
+    driverFirstName: z.string().optional().describe("The driver's first name"),
+    driverLastName: z.string().optional().describe("The driver's last name"),
+    driverName: z.string().optional().describe("The driver's full name"),
+}).describe("Schema for identifying the driver");
+export type DriverIdentity = z.infer<typeof DriverIdentity>;
+
+export const VehicleIdentity = z.object({
+    vehicleId: z.string().optional().describe("The vehicle ID"),
+}).describe("Schema for identifying the vehicle");
+export type VehicleIdentity = z.infer<typeof VehicleIdentity>;
+
+export const ConvexUpdateNested = z.object({
+    driver: DriverIdentity,
+    vehicle: VehicleIdentity,
     hoursOfService: HoursOfService,
     driverLocation: DriverLocation,
     driverStatus: DriverStatus,
