@@ -37,8 +37,10 @@ export const NewLoginResponseSuccess = z.object({
     user: PublicUser,
     provider: PublicProvider,
 });
+
 export const NewLoginResponseFailure = z.object({
     success: z.literal(false),
     error: z.string(),
 });
+
 export const NewLoginResponse = z.union([NewLoginResponseSuccess, NewLoginResponseFailure]);
