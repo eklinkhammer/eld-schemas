@@ -14,7 +14,6 @@ const UrlSchema = z.string().refine(
 export const ConvexUpdate = z.object({
     provider_url: UrlSchema.describe("The URL of the ELD provider"),
     username: z.string().describe("The driver's login username"),
-    driver_id: z.string().optional().describe("The ELD's internal driver ID"),
     driver_name: z.string().optional().describe("The driver's full name"),
     vehicle_id: z.string().optional().describe("The vehicle ID"),
     driver_status: z.string().describe("The driver's duty status (direct from ELD)"),
