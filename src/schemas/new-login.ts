@@ -12,7 +12,7 @@ const UrlSchema = z.string().refine(
   { message: "Invalid URL" }
 );
 export const NewLoginRequest = z.object({
-    providerUrl: UrlSchema,
+    provider_url: UrlSchema,
     username: z.string().min(1),
     password: z.string().min(1),
 });
