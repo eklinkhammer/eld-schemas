@@ -12,12 +12,9 @@ const UrlSchema = z.string().refine(
   { message: "Invalid URL" }
 );
 export const ConvexUpdate = z.object({
-    providerUrl: UrlSchema.describe("The URL of the ELD provider"),
+    provider_url: UrlSchema.describe("The URL of the ELD provider"),
     username: z.string().describe("The driver's login username"),
-    password: z.string().describe("The driver's login password"),
     driver_id: z.string().optional().describe("The ELD's internal driver ID"),
-    driver_first_name: z.string().optional().describe("The driver's first name"),
-    driver_last_name: z.string().optional().describe("The driver's last name"),
     driver_name: z.string().optional().describe("The driver's full name"),
     vehicle_id: z.string().optional().describe("The vehicle ID"),
     driver_status: z.string().describe("The driver's duty status (direct from ELD)"),
