@@ -18,7 +18,7 @@ export const NewLoginRequest = z.object({
     ownerId: z.string(),
     externalProviderAccountId: z.string()
 });
-type NewLoginRequest = z.infer<typeof NewLoginRequest>;
+export type NewLoginRequest = z.infer<typeof NewLoginRequest>;
 
 const PublicUser = z.object({
     id: z.string(),
@@ -43,9 +43,12 @@ export const NewLoginResponseSuccess = z.object({
     organizationId: z.string().optional(),
     honkUserId: z.string().optional(),
 });
+export type NewLoginResponseSuccess = z.infer<typeof NewLoginResponseSuccess>;
 
 export const NewLoginResponseFailure = z.object({
     error: z.string(),
 });
+export type NewLoginResponseFailure = z.infer<typeof NewLoginResponseFailure>;
 
 export const NewLoginResponse = z.union([NewLoginResponseSuccess, NewLoginResponseFailure]);
+export type NewLoginResponse = z.infer<typeof NewLoginResponse>;
