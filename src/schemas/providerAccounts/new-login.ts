@@ -12,14 +12,13 @@ const UrlSchema = z.string().refine(
   { message: "Invalid URL" }
 );
 export const NewLoginRequest = z.object({
-    provider_url: UrlSchema,
+    providerUrl: UrlSchema,
     username: z.string().min(1),
-    password: z.string().min(1),
-    organizationId: z.string().optional(),
-    honkUserId: z.string().optional(),
-}).refine((data) => (data.organizationId && !data.honkUserId) || (!data.organizationId && data.honkUserId), {
-    message: "Requires one and only one of organizationId or honkUserId must be provided",
+    encryptedPassword: z.string().min(1),
+    ownerId: z.string(),
+    externalProviderAccountId: z.string()
 });
+type NewLoginRequest = z.infer<typeof NewLoginRequest>;
 
 const PublicUser = z.object({
     id: z.string(),
@@ -36,7 +35,6 @@ const PublicProvider = z.object({
 type PublicProvider = z.infer<typeof PublicProvider>;
 
 export const NewLoginResponseSuccess = z.object({
-    success: z.literal(true),
     message: z.string(),
     user: PublicUser,
     provider: PublicProvider,
@@ -47,7 +45,6 @@ export const NewLoginResponseSuccess = z.object({
 });
 
 export const NewLoginResponseFailure = z.object({
-    success: z.literal(false),
     error: z.string(),
 });
 

@@ -12,7 +12,8 @@ export enum ScrapeStatus {
 
 export const UpdateScrapeStatusMessage = z.object({
     status: z.nativeEnum(ScrapeStatus).describe("The current status of the scrape process"),
-    username: z.string().describe("The username of the driver whose status is being updated"),
+    externalProviderAccountId: z.string().describe("The external identifier for the provider account"),
+    username: z.string().describe("The username of the provider account whose status is being updated"),
     provider_url: z.string().describe("The URL of the ELD provider"),
 }).describe("Schema for update status messages");
 export type UpdateScrapeStatusMessage = z.infer<typeof UpdateScrapeStatusMessage>;
