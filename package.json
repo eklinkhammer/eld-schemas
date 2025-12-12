@@ -11,14 +11,18 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./convex": "./dist/convex.js"
+    "./browser": {
+      "types": "./dist/browser.d.ts",
+      "import": "./dist/browser.js",
+      "require": "./dist/browser.cjs"
+    }
   },
   "files": [
     "dist"
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "tsup src/index.ts --dts --format esm,cjs --out-dir dist --clean",
+    "build": "tsup src/index.ts src/browser.ts --dts --format esm,cjs --out-dir dist --clean",
     "prepublishOnly": "npm run build",
     "prepare": "npm run build",
     "test": "vitest run",
