@@ -34,3 +34,8 @@ export const ConvexUpdate = z.object({
     mileage_since_last_update: z.number().optional().describe("Mileage since last update in miles"),
 }).describe("Schema for updating driver ELD status information");
 export type ConvexUpdate = z.infer<typeof ConvexUpdate>;
+
+export const BatchConvexUpdate = z.object({
+    updates: z.array(ConvexUpdate).describe("An array of Convex ELD driver updates"),
+}).describe("Schema for batch updating driver ELD status information");
+export type BatchConvexUpdate = z.infer<typeof BatchConvexUpdate>;
