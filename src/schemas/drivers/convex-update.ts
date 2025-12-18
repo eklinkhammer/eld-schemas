@@ -31,5 +31,6 @@ export const ConvexUpdate = z.object({
     convex_provider_account_id: z.string().describe("The Convex ELD provider account ID"),
     external_provider_account_id: z.string().describe("The provider account ID on backend"),
     external_driver_id: z.string().describe("The driver ID on backend"),
+    mileage_since_last_update: z.number().optional().describe("Mileage since last update in miles"),
 }).describe("Schema for updating driver ELD status information");
 export type ConvexUpdate = z.infer<typeof ConvexUpdate>;
