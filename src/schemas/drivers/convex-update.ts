@@ -12,8 +12,9 @@ const UrlSchema = z.string().refine(
   { message: "Invalid URL" }
 );
 export const ConvexUpdate = z.object({
-    provider_url: UrlSchema.describe("The URL of the ELD provider"),
-    username: z.string().describe("The driver's login username"),
+  provider_url: UrlSchema.describe("The URL of the ELD provider"),
+  username: z.string().describe("The ELD account's login username"),
+  drivers: z.array(z.object({
     driver_name: z.string().optional().describe("The driver's full name"),
     vehicle_id: z.string().optional().describe("The vehicle ID"),
     driver_status: z.string().describe("The driver's duty status (direct from ELD)"),
@@ -32,10 +33,11 @@ export const ConvexUpdate = z.object({
     external_provider_account_id: z.string().describe("The provider account ID on backend"),
     external_driver_id: z.string().describe("The driver ID on backend"),
     mileage_since_last_update: z.number().optional().describe("Mileage since last update in miles"),
+  }).describe("An object containing driver ELD status information")).describe("An array of driver ELD status updates"),
 }).describe("Schema for updating driver ELD status information");
 export type ConvexUpdate = z.infer<typeof ConvexUpdate>;
 
 export const BatchConvexUpdate = z.object({
-    updates: z.array(ConvexUpdate).describe("An array of Convex ELD driver updates"),
+  updates: z.array(ConvexUpdate).describe("An array of Convex ELD driver updates"),
 }).describe("Schema for batch updating driver ELD status information");
 export type BatchConvexUpdate = z.infer<typeof BatchConvexUpdate>;
