@@ -16,7 +16,8 @@ export const NewLoginRequest = z.object({
     username: z.string().min(1),
     encryptedPassword: z.string().min(1),
     ownerId: z.string(),
-    externalProviderAccountId: z.string()
+    externalProviderAccountId: z.string(),
+    convexUpdateUrl: z.string().url().describe("The Convex function URL to send updates to"),
 });
 export type NewLoginRequest = z.infer<typeof NewLoginRequest>;
 
