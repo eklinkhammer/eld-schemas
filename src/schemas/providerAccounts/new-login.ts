@@ -1,5 +1,45 @@
 import { z } from 'zod';
 
+// Explicit interfaces for clean type exports (these bypass Zod's complex generic types)
+export interface NewLoginRequestData {
+    providerUrl: string;
+    username: string;
+    encryptedPassword: string;
+    ownerId: string;
+    externalProviderAccountId: string;
+    convexUpdateUrl: string;
+}
+
+export interface PublicUserData {
+    id: string;
+    username: string;
+    created_at: Date;
+    updated_at: Date;
+}
+
+export interface PublicProviderData {
+    name: string;
+    url: string;
+}
+
+export interface NewLoginResponseSuccessData {
+    success?: boolean;
+    message: string;
+    user: PublicUserData;
+    provider: PublicProviderData;
+    driverIds: string[];
+    organizationId?: string;
+    honkUserId?: string;
+}
+
+export interface NewLoginResponseFailureData {
+    success?: boolean;
+    error: string;
+}
+
+export type NewLoginResponseData = NewLoginResponseSuccessData | NewLoginResponseFailureData;
+
+// URL validation schema
 const UrlSchema = z.string().refine(
   (val) => {
     try {
@@ -11,7 +51,9 @@ const UrlSchema = z.string().refine(
   },
   { message: "Invalid URL" }
 );
-export const NewLoginRequest = z.object({
+
+// Zod schemas for runtime validation
+export const NewLoginRequestSchema = z.object({
     providerUrl: UrlSchema,
     username: z.string().min(1),
     encryptedPassword: z.string().min(1),
@@ -19,37 +61,46 @@ export const NewLoginRequest = z.object({
     externalProviderAccountId: z.string(),
     convexUpdateUrl: z.string().url().describe("The Convex function URL to send updates to"),
 });
-export type NewLoginRequest = z.infer<typeof NewLoginRequest>;
 
-const PublicUser = z.object({
+const PublicUserSchema = z.object({
     id: z.string(),
     username: z.string(),
     created_at: z.coerce.date(),
     updated_at: z.coerce.date(),
 });
-type PublicUser = z.infer<typeof PublicUser>;
 
-const PublicProvider = z.object({
+const PublicProviderSchema = z.object({
     name: z.string(),
     url: UrlSchema,
 });
-type PublicProvider = z.infer<typeof PublicProvider>;
 
-export const NewLoginResponseSuccess = z.object({
+export const NewLoginResponseSuccessSchema = z.object({
+    success: z.boolean().optional(),
     message: z.string(),
-    user: PublicUser,
-    provider: PublicProvider,
+    user: PublicUserSchema,
+    provider: PublicProviderSchema,
     driverIds: z.array(z.string())
       .describe("An array of driver IDs associated with the login"),
     organizationId: z.string().optional(),
     honkUserId: z.string().optional(),
 });
-export type NewLoginResponseSuccess = z.infer<typeof NewLoginResponseSuccess>;
 
-export const NewLoginResponseFailure = z.object({
+export const NewLoginResponseFailureSchema = z.object({
+    success: z.boolean().optional(),
     error: z.string(),
 });
-export type NewLoginResponseFailure = z.infer<typeof NewLoginResponseFailure>;
 
-export const NewLoginResponse = z.union([NewLoginResponseSuccess, NewLoginResponseFailure]);
-export type NewLoginResponse = z.infer<typeof NewLoginResponse>;
+export const NewLoginResponseSchema = z.union([NewLoginResponseSuccessSchema, NewLoginResponseFailureSchema]);
+
+// Backward compatibility aliases (deprecated - use *Schema and *Data versions)
+export const NewLoginRequest = NewLoginRequestSchema;
+export type NewLoginRequest = NewLoginRequestData;
+
+export const NewLoginResponseSuccess = NewLoginResponseSuccessSchema;
+export type NewLoginResponseSuccess = NewLoginResponseSuccessData;
+
+export const NewLoginResponseFailure = NewLoginResponseFailureSchema;
+export type NewLoginResponseFailure = NewLoginResponseFailureData;
+
+export const NewLoginResponse = NewLoginResponseSchema;
+export type NewLoginResponse = NewLoginResponseData;
